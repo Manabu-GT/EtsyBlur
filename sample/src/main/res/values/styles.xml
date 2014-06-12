@@ -1,0 +1,56 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/etsy_actionbar</item>
+        <item name="android:actionBarTabTextStyle">@style/TabTextStyle</item>
+        <item name="android:actionMenuTextColor">@color/actionbar_text</item>
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/etsy_actionbar</item>
+        <item name="actionBarTabTextStyle">@style/TabTextStyle</item>
+        <item name="actionMenuTextColor">@color/actionbar_text</item>
+    </style>
+
+    <style name="etsy_actionbar" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:titleTextStyle">@style/TitleTextStyle</item>
+        <!-- ActionBar Background Color -->
+        <item name="android:background">@color/bg_action_bar</item>
+        <!-- Support library compatibility -->
+        <item name="titleTextStyle">@style/TitleTextStyle</item>
+        <item name="background">@color/bg_action_bar</item>
+    </style>
+
+    <!-- action bar title text -->
+    <style name="TitleTextStyle"
+        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/actionbar_text</item>
+    </style>
+
+    <!-- action bar tab text -->
+    <style name="TabTextStyle"
+        parent="@style/Widget.AppCompat.ActionBar.TabText">
+        <item name="android:textColor">@color/actionbar_text</item>
+    </style>
+
+    <!--&lt;!&ndash; Dialog w/ Slide Animation Style &ndash;&gt;-->
+    <!--<style name="DialogSlideAnimation" parent="@android:style/Theme.Dialog">-->
+        <!--<item name="android:windowAnimationStyle">@style/DialogAnimation</item>-->
+    <!--</style>-->
+
+    <!--&lt;!&ndash; dialog animation &ndash;&gt;-->
+    <!--<style name="DialogAnimation">-->
+        <!--<item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/slide_down_dialog</item>-->
+    <!--</style>-->
+
+    <!--&lt;!&ndash;<style name="DialogAnimation2">&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="android:windowEnterAnimation">@anim/fade_in_dialog</item>&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="android:windowExitAnimation">@anim/fade_out_dialog</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;</style>&ndash;&gt;-->
+
+    <!--<style name="DialogAnimation2">-->
+        <!--<item name="android:windowEnterAnimation">@anim/fade_in_dialog</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/fade_out_dialog</item>-->
+    <!--</style>-->
+
+</resources>

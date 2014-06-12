@@ -1,0 +1,44 @@
+apply plugin: 'android-library'
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        packageName "com.ms.square.android.etsyblur"
+        minSdkVersion 8
+        targetSdkVersion 19
+        renderscriptTargetApi 19
+        renderscriptSupportMode true
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:19.+'
+}
+
+def repositoryUrl
+if (has('repoDir')) {
+    repositoryUrl = "file://$repoDir/mvn-repo/"
+} else {
+    repositoryUrl = "file://$buildDir/mvn-repo/"
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: repositoryUrl)
+            pom.version = '0.1.0'
+            pom.groupId = 'com.ms.square'
+            pom.artifactId = 'etsyblur'
+        }
+    }
+}

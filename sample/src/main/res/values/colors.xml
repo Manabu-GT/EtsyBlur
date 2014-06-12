@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_action_bar">#eeeeec</color>
+    <color name="actionbar_text">#34322d</color>
+    <color name="bg_drawer">#e25600</color>
+    <color name="bg_glass">#88ffffff</color>
+</resources>
