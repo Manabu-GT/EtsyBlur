@@ -11,7 +11,7 @@ android {
         packageName "com.ms.square.android.etsyblurdemo"
         minSdkVersion 8
         targetSdkVersion 19
-        versionCode 1
+        versionCode 2
         versionName "0.1.0"
         renderscriptTargetApi 19
         renderscriptSupportMode true
