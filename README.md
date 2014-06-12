@@ -1,8 +1,8 @@
 EtsyBlur
 ===========
 
-EtsyBlur is an Android library that allows developers to easily add a glass-like effect implemented in the 
-[Etsy][1] app.
+EtsyBlur is an Android library that allows developers to easily add a glass-like effect 
+implemented in the [Etsy][1] app.
 
 Screenshots:
 
