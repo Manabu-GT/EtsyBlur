@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Build;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.AlphaAnimation;
@@ -55,7 +56,7 @@ public class Util {
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    public static void animateAlpha(View view, float toAlpha, int duration, final Runnable endAction) {
+    public static void animateAlpha(final View view, float fromAlpha, float toAlpha, int duration, final Runnable endAction) {
         if (isPostHoneycomb()) {
             ViewPropertyAnimator animator = view.animate().alpha(toAlpha).setDuration(duration);
             if (endAction != null) {
@@ -66,14 +67,16 @@ public class Util {
                 });
             }
         } else {
-            AlphaAnimation alphaAnimation = new AlphaAnimation(0f, toAlpha);
+            AlphaAnimation alphaAnimation = new AlphaAnimation(fromAlpha, toAlpha);
             alphaAnimation.setDuration(duration);
             alphaAnimation.setFillAfter(true);
             if (endAction != null) {
                 alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        endAction.run();
+                        // fixes the crash bug while removing views
+                        Handler handler = new Handler();
+                        handler.post(endAction);
                     }
                     @Override
                     public void onAnimationStart(Animation animation) { }

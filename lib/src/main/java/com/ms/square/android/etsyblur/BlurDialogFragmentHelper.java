@@ -106,17 +106,17 @@ public class BlurDialogFragmentHelper {
     }
 
     private void startEnterAnimation() {
-        Util.animateAlpha(mBgView, 1f, mAnimDuration, null);
-        Util.animateAlpha(mBlurImgView, 1f, mAnimDuration, null);
+        Util.animateAlpha(mBgView, 0f, 1f, mAnimDuration, null);
+        Util.animateAlpha(mBlurImgView, 0f, 1f, mAnimDuration, null);
     }
 
     private void startExitAnimation() {
-        Util.animateAlpha(mBgView, 0f, mAnimDuration, null);
-        Util.animateAlpha(mBlurImgView, 0f, mAnimDuration, new Runnable() {
+        Util.animateAlpha(mBgView, 1f, 0f, mAnimDuration, null);
+        Util.animateAlpha(mBlurImgView, 1f, 0f, mAnimDuration, new Runnable() {
             @Override
             public void run() {
-                mRoot.removeView(mBgView);
                 mRoot.removeView(mBlurImgView);
+                mRoot.removeView(mBgView);
             }
         });
     }
