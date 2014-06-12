@@ -6,11 +6,12 @@ implemented in the [Etsy][1] app.
 
 Screenshots:
 
-Coming soon...
+<img src="https://raw.github.com/Manabu-GT/EtsyBlur/master/art/drawer.png" width=270 height=480 alt="Drawer">
+<img src="https://raw.github.com/Manabu-GT/EtsyBlur/master/art/dialog.png" width=270 height=480 alt="Dialog">
 
 Try out the sample application:
 
-<a href="https://play.google.com/store/apps/details?id=com.ms.square.android.etsydemo">
+<a href="https://play.google.com/store/apps/details?id=com.ms.square.android.etsyblurdemo">
   <img alt="Android app on Google Play"
        src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
 </a>
