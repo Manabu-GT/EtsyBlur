@@ -6,7 +6,7 @@ android {
     buildToolsVersion "19.1.0"
 
     defaultConfig {
-        packageName "com.ms.square.android.etsyblur"
+        applicationId "com.ms.square.android.etsyblur"
         minSdkVersion 8
         targetSdkVersion 19
         renderscriptTargetApi 19
