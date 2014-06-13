@@ -4,10 +4,7 @@ EtsyBlur
 EtsyBlur is an Android library that allows developers to easily add a glass-like effect 
 implemented in the [Etsy][1] app.
 
-Screenshots:
-
-<img src="https://raw.github.com/Manabu-GT/EtsyBlur/master/art/drawer.png" width=270 height=480 alt="Drawer">
-<img src="https://raw.github.com/Manabu-GT/EtsyBlur/master/art/dialog.png" width=270 height=480 alt="Dialog">
+<img src="https://raw.github.com/Manabu-GT/EtsyBlur/master/art/readme_demo.gif" width=244 height=415 alt="Quick Demo">
 
 Try out the sample application:
 
@@ -45,7 +42,61 @@ Usage
 ------
 Using the library is really simple, just look at the source code of the [provided sample][2].
 
-More detailed explanation will be coming soon...
+### For NavigationDrawer
+
+* `EtsyActionBarDrawerToggle`
+
+Simply replace the ActionBarDrawerToggle class by this class to get the blur effect.
+
+Also, your layout file for the main activity should look like the following.
+To make the library work, you have to use the id 'container' for the content frame and 'blur_view'
+for the ImageView to show the blurred image.
+
+```
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    
+    <FrameLayout
+        android:id="@id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- needed w/this id for EtsyLib to work -->
+    <ImageView
+        android:id="@id/blur_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:visibility="gone">
+    </ImageView>
+
+    <fragment android:id="@+id/navigation_drawer"
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:name="com.ms.square.android.etsyblurdemo.NavigationDrawerFragment"
+        tools:layout="@layout/fragment_navigation_drawer" />
+
+</android.support.v4.widget.DrawerLayout>
+```
+
+###  For DialogFragment
+
+* `BlurDialogFragmentHelper`
+
+This is a helper class to make the dialog background into the blurred image of the underlying content.
+To make it work, instantiate this class in your DialogFragment(ex.. in onCreate) and 
+forward the following methods in it to this helper class.
+
+ - public void onCreate(Bundle savedInstanceState)
+ - public void onViewCreated(View view, Bundle savedInstanceState)
+ - public void onStart()
+ - public void onCancel(DialogInterface dialog)
 
 License
 ----------
