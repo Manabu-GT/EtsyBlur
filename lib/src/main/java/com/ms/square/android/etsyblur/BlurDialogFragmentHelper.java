@@ -86,6 +86,7 @@ public class BlurDialogFragmentHelper {
         Bitmap bitmap = Util.drawViewToBitmap(mRoot, mRoot.getWidth(), mRoot.getHeight(), 3);
         Bitmap blurred = Blur.apply(mFragment.getActivity(), bitmap);
         mBlurImgView.setImageBitmap(blurred);
+        bitmap.recycle();
 
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
