@@ -59,11 +59,9 @@ public class BlurDialogFragmentHelper {
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // hack to make the dialog into full screen w/ transparent background
         Window window = mFragment.getDialog().getWindow();
-        // disable window animations
         window.setWindowAnimations(mWindowAnimResId);
-        // set transparent background for the window
+        // set transparent background for the window of this dialog
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         mBgView = new View(mFragment.getActivity());
