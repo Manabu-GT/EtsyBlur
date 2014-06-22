@@ -1,5 +1,4 @@
 apply plugin: 'android-library'
-apply plugin: 'maven'
 
 android {
     compileSdkVersion 19
@@ -25,20 +24,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:19.+'
 }
 
-def repositoryUrl
-if (has('repoDir')) {
-    repositoryUrl = "file://$repoDir/mvn-repo/"
-} else {
-    repositoryUrl = "file://$buildDir/mvn-repo/"
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: repositoryUrl)
-            pom.version = '0.1.0'
-            pom.groupId = 'com.ms.square'
-            pom.artifactId = 'etsyblur'
-        }
-    }
-}
+// for maven central deployment
+apply from: 'https://raw.github.com/shamanland/gradle-mvn-push/cc18d56549cdea03f744b6fff27911569394073e/gradle-mvn-push.gradle'
+//master branch does not work with android gradle plugin 0.11.x yet
+//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
