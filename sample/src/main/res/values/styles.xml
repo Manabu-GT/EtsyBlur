@@ -1,10 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="NewApi">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!--<item name="android:actionBarStyle">@style/etsy_actionbar</item>-->
-        <!--<item name="android:actionBarTabTextStyle">@style/TabTextStyle</item>-->
-        <!--<item name="android:actionMenuTextColor">@color/actionbar_text</item>-->
+        <item name="android:actionBarStyle">@style/etsy_actionbar</item>
+        <item name="android:actionBarTabTextStyle">@style/TabTextStyle</item>
+        <item name="android:actionMenuTextColor">@color/actionbar_text</item>
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/etsy_actionbar</item>
         <item name="actionBarTabTextStyle">@style/TabTextStyle</item>
@@ -12,7 +13,7 @@
     </style>
 
     <style name="etsy_actionbar" parent="@style/Widget.AppCompat.ActionBar">
-        <!--<item name="android:titleTextStyle">@style/TitleTextStyle</item>-->
+        <item name="android:titleTextStyle">@style/TitleTextStyle</item>
         <!-- ActionBar Background Color -->
         <item name="android:background">@color/bg_action_bar</item>
         <!-- Support library compatibility -->
