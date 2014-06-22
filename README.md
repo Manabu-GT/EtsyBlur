@@ -19,15 +19,12 @@ API Level 8 (Froyo) and above.
 
 Setup
 ------
-You just need to add the followings to your ***build.gradle*** file:
+The library is pushed to Maven Central as an AAR, 
+so you just need to add the followings to your ***build.gradle*** file:
 
 ```
-repositories {
-    maven { url 'http://Manabu-GT.github.com/EtsyBlur/mvn-repo' }
-}
-
 dependencies {
-    compile 'com.ms.square:etsyblur:0.1.0'
+    compile 'com.ms-square:etsyblur:0.1.0'
 }
 
 android {
