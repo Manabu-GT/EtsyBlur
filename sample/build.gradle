@@ -1,20 +1,20 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 // Changes the base apk name to EtsyBlurDemo
 project.ext.set("archivesBaseName", "EtsyBlurDemo");
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion project.ANDROID_COMPILE_SDK_VERSION
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "com.ms.square.android.etsyblurdemo"
-        minSdkVersion 8
-        targetSdkVersion 19
+        minSdkVersion project.ANDROID_MIN_SDK_VERSION
+        targetSdkVersion project.ANDROID_TARGET_SDK_VERSION
         versionCode 2
         versionName "0.1.0"
-        renderscriptTargetApi 19
-        renderscriptSupportMode true
+        renderscriptTargetApi project.ANDROID_RS_TARGET_VERSION
+        renderscriptSupportModeEnabled true
     }
 
     signingConfigs {
@@ -25,8 +25,8 @@ android {
 
     buildTypes {
         release {
-            zipAlign true
-            runProguard false
+            zipAlignEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             if (project.hasProperty('storeFile')) {
                 signingConfig signingConfigs.release

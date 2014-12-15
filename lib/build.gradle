@@ -1,19 +1,20 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+
+    compileSdkVersion project.ANDROID_COMPILE_SDK_VERSION
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId "com.ms.square.android.etsyblur"
-        minSdkVersion 8
-        targetSdkVersion 19
-        renderscriptTargetApi 19
-        renderscriptSupportMode true
+        minSdkVersion project.ANDROID_MIN_SDK_VERSION
+        targetSdkVersion project.ANDROID_TARGET_SDK_VERSION
+        renderscriptTargetApi project.ANDROID_RS_TARGET_VERSION
+        renderscriptSupportModeEnabled true
     }
+
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -25,6 +26,4 @@ dependencies {
 }
 
 // for maven central deployment
-apply from: 'https://raw.github.com/shamanland/gradle-mvn-push/cc18d56549cdea03f744b6fff27911569394073e/gradle-mvn-push.gradle'
-//master branch does not work with android gradle plugin 0.11.x yet
-//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+apply from: 'https://raw.githubusercontent.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

@@ -22,7 +22,7 @@ Setup
 The library is pushed to Maven Central as an AAR, 
 so you just need to add the followings to your ***build.gradle*** file:
 
-```
+```groovy
 dependencies {
     compile 'com.ms-square:etsyblur:0.1.0'
 }
@@ -49,7 +49,7 @@ Also, your layout file for the main activity should look like the following.
 To make the library work, you have to use the id 'container' for the content frame and 'blur_view'
 for the ImageView to show the blurred image.
 
-```
+```xml
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
