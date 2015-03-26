@@ -18,8 +18,6 @@ import com.ms.square.android.etsyblur.BlurDialogFragmentHelper;
  */
 public class BlurDialogFragment extends DialogFragment {
 
-    private static final String TAG = BlurDialogFragment.class.getSimpleName();
-
     private BlurDialogFragmentHelper mHelper;
 
     public static BlurDialogFragment newInstance() {
@@ -31,15 +29,32 @@ public class BlurDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHelper = new BlurDialogFragmentHelper(this);
-        mHelper.onCreate(savedInstanceState);
+        mHelper.onCreate();
     }
 
+    // implement either onCreateView or onCreateDialog
+//    @Override
+//    public Dialog onCreateDialog(Bundle savedInstanceState) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+//            AlertDialog dialog = new AlertDialog.Builder(getActivity(), getTheme())
+//                    .setIcon(R.drawable.ic_launcher)
+//                    .setTitle("Hello")
+//                    .setPositiveButton("OK", null)
+//                    .create();
+//            dialog.getWindow().getAttributes().height = WindowManager.LayoutParams.WRAP_CONTENT;
+//            return dialog;
+//        }
+//        // customize the content of the dialog by overriding onCreateView
+//        return super.onCreateDialog(savedInstanceState);
+//    }
+
+    // implement either onCreateView or onCreateDialog
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_dialog_demo, container, false);
 
         ListView listView = (ListView) v.findViewById(R.id.dialog_content);
-        listView.setAdapter(new ArrayAdapter<String>(
+        listView.setAdapter(new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
@@ -54,10 +69,9 @@ public class BlurDialogFragment extends DialogFragment {
         return v;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mHelper.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mHelper.onActivityCreated();
     }
 
     @Override
@@ -67,8 +81,8 @@ public class BlurDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onCancel(DialogInterface dialog) {
-        mHelper.onCancel(dialog);
-        super.onCancel(dialog);
+    public void onDismiss(DialogInterface dialog) {
+        mHelper.onDismiss();
+        super.onDismiss(dialog);
     }
 }
