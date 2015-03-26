@@ -24,12 +24,12 @@ so you just need to add the followings to your ***build.gradle*** file:
 
 ```groovy
 dependencies {
-    compile 'com.ms-square:etsyblur:0.1.0'
+    compile 'com.ms-square:etsyblur:0.1.1'
 }
 
 android {
     defaultConfig {
-        renderscriptTargetApi 19
+        renderscriptTargetApi 22
         renderscriptSupportMode true
     }
 }
@@ -90,10 +90,10 @@ This is a helper class to make the dialog background into the blurred image of t
 To make it work, instantiate this class in your DialogFragment(ex.. in onCreate) and 
 forward the following methods in it to this helper class.
 
- - public void onCreate(Bundle savedInstanceState)
- - public void onViewCreated(View view, Bundle savedInstanceState)
+ - public void onCreate()
+ - public void onActivityCreated()
  - public void onStart()
- - public void onCancel(DialogInterface dialog)
+ - public void onDismiss()
 
 License
 ----------
