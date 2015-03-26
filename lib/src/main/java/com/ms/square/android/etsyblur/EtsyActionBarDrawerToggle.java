@@ -15,8 +15,6 @@ import android.widget.ImageView;
  */
 public class EtsyActionBarDrawerToggle extends ActionBarDrawerToggle {
 
-    private static final String TAG = EtsyActionBarDrawerToggle.class.getSimpleName();
-
     private static final int DEFAULT_RADIUS = 10;
     private static final int DEFAULT_DOWN_SAMPLING = 3;
 

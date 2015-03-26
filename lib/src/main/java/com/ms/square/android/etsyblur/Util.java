@@ -26,11 +26,11 @@ public class Util {
     public static Bitmap drawViewToBitmap(View view, int width, int height, float translateX,
                                           float translateY, int downSampling) {
         float scale = 1f / downSampling;
-        int bmpWidth = (int) (width * scale - translateX/downSampling);
-        int bmpHeight = (int) (height * scale - translateY/downSampling);
+        int bmpWidth = (int) (width * scale - translateX / downSampling);
+        int bmpHeight = (int) (height * scale - translateY / downSampling);
         Bitmap dest = Bitmap.createBitmap(bmpWidth, bmpHeight, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(dest);
-        c.translate(-translateX/downSampling, -translateY/downSampling);
+        c.translate(-translateX / downSampling, -translateY / downSampling);
         if (downSampling > 1) {
             c.scale(scale, scale);
         }
