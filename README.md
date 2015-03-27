@@ -95,6 +95,11 @@ forward the following methods in it to this helper class.
  - public void onStart()
  - public void onDismiss()
 
+Note:
+
+In your DialogFragment, override either onCreateDialog() or onCreateView(), not both.
+For a simple example, please look at the BlurDialogFragment in [provided sample][2].
+
 License
 ----------
 
