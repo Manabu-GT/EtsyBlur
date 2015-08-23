@@ -69,7 +69,7 @@ public class BlurDialogFragmentHelper {
         window.setWindowAnimations(mWindowAnimStyle);
 
         mRoot = (ViewGroup) mFragment.getActivity().getWindow().getDecorView();
-        Rect visibleFrame = new Rect();
+        final Rect visibleFrame = new Rect();
         mRoot.getWindowVisibleDisplayFrame(visibleFrame);
 
         mBlurContainer = new FrameLayout(mFragment.getActivity());
@@ -91,11 +91,18 @@ public class BlurDialogFragmentHelper {
 
         mRoot.addView(mBlurContainer);
 
-        Bitmap bitmap = Util.drawViewToBitmap(mRoot, mRoot.getWidth(),
-                visibleFrame.bottom, 0, visibleFrame.top, 3);
-        Bitmap blurred = Blur.apply(mFragment.getActivity(), bitmap);
-        mBlurImgView.setImageBitmap(blurred);
-        bitmap.recycle();
+        // makes sure to run after the layout pass has been completed for the root
+        // to avoid the zero width/height error
+        mRoot.post(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = Util.drawViewToBitmap(mRoot, mRoot.getWidth(),
+                        visibleFrame.bottom, 0, visibleFrame.top, 3);
+                Bitmap blurred = Blur.apply(mFragment.getActivity(), bitmap);
+                mBlurImgView.setImageBitmap(blurred);
+                bitmap.recycle();
+            }
+        });
 
         View view = mFragment.getView();
         if (view != null) {
