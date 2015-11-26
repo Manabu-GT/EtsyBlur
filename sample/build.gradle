@@ -11,8 +11,8 @@ android {
         applicationId "com.ms.square.android.etsyblurdemo"
         minSdkVersion project.ANDROID_MIN_SDK_VERSION
         targetSdkVersion project.ANDROID_TARGET_SDK_VERSION
-        versionCode 3
-        versionName "0.1.1"
+        versionCode 4
+        versionName "0.1.2"
         renderscriptTargetApi project.ANDROID_RS_TARGET_VERSION
         renderscriptSupportModeEnabled true
     }
@@ -21,7 +21,7 @@ android {
         release {
             def Properties keyProps = new Properties()
             // double check if keystore.properties exists to avoid exception
-            if(file("../keystore.properties").exists()) {
+            if (file("../keystore.properties").exists()) {
                 keyProps.load(new FileInputStream(file('../keystore.properties')))
             }
             storeFile keyProps["storeFile"] != null ? file(keyProps["storeFile"]) : null
@@ -37,7 +37,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // check if keystore.properties exists in the root
-            if(file("../keystore.properties").exists()) {
+            if (file("../keystore.properties").exists()) {
                 signingConfig signingConfigs.release
             }
         }
@@ -47,5 +47,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:${supportPackageVersion}"
+
     compile project(':lib')
 }

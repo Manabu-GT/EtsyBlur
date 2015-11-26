@@ -6,6 +6,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class BlurDialogFragmentHelper {
 
     /**
      * Duration of the alpha animation.
+     *
      * @param animDuration The length of ensuing property animations, in milliseconds.
      *                     The value cannot be negative.
      */
@@ -68,19 +70,24 @@ public class BlurDialogFragmentHelper {
         Window window = mFragment.getDialog().getWindow();
         window.setWindowAnimations(mWindowAnimStyle);
 
+        Rect visibleFrame = new Rect();
         mRoot = (ViewGroup) mFragment.getActivity().getWindow().getDecorView();
-        final Rect visibleFrame = new Rect();
         mRoot.getWindowVisibleDisplayFrame(visibleFrame);
 
         mBlurContainer = new FrameLayout(mFragment.getActivity());
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
-        params.topMargin = visibleFrame.top;
-        params.bottomMargin = mRoot.getHeight() - visibleFrame.bottom;
-        mBlurContainer.setLayoutParams(params);
+        if (Util.isPostHoneycomb()) {
+            // window has a navigation bar
+            mBlurContainer = new FrameLayout(mFragment.getActivity());
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(visibleFrame.right - visibleFrame.left,
+                    visibleFrame.bottom - visibleFrame.top);
+            params.setMargins(visibleFrame.left, visibleFrame.top, 0, 0);
+            mBlurContainer.setLayoutParams(params);
+        } else {
+            mBlurContainer.setPadding(visibleFrame.left, visibleFrame.top, 0, 0);
+        }
 
         mBlurBgView = new View(mFragment.getActivity());
-        mBlurBgView.setBackgroundColor(mFragment.getResources().getColor(mBgColorResId));
+        mBlurBgView.setBackgroundColor(ContextCompat.getColor(mFragment.getContext(), mBgColorResId));
         Util.setAlpha(mBlurBgView, 0f);
 
         mBlurImgView = new ImageView(mFragment.getActivity());
@@ -91,18 +98,12 @@ public class BlurDialogFragmentHelper {
 
         mRoot.addView(mBlurContainer);
 
-        // makes sure to run after the layout pass has been completed for the root
-        // to avoid the zero width/height error
-        mRoot.post(new Runnable() {
-            @Override
-            public void run() {
-                Bitmap bitmap = Util.drawViewToBitmap(mRoot, mRoot.getWidth(),
-                        visibleFrame.bottom, 0, visibleFrame.top, 3);
-                Bitmap blurred = Blur.apply(mFragment.getActivity(), bitmap);
-                mBlurImgView.setImageBitmap(blurred);
-                bitmap.recycle();
-            }
-        });
+        // apply blur effect
+        Bitmap bitmap = Util.drawViewToBitmap(mRoot, visibleFrame.right,
+                visibleFrame.bottom, visibleFrame.left, visibleFrame.top, 3);
+        Bitmap blurred = Blur.apply(mFragment.getActivity(), bitmap);
+        mBlurImgView.setImageBitmap(blurred);
+        bitmap.recycle();
 
         View view = mFragment.getView();
         if (view != null) {
