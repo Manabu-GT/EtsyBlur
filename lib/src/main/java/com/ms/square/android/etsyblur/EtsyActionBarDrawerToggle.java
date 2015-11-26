@@ -84,11 +84,11 @@ public class EtsyActionBarDrawerToggle extends ActionBarDrawerToggle {
     @Override
     public void onDrawerSlide(final View drawerView, final float slideOffset) {
         super.onDrawerSlide(drawerView, slideOffset);
-            if (slideOffset > 0f) {
-                setBlurAlpha(slideOffset);
-            } else {
-                clearBlurImage();
-            }
+        if (slideOffset > 0f) {
+            setBlurAlpha(slideOffset);
+        } else {
+            clearBlurImage();
+        }
     }
 
     @Override
