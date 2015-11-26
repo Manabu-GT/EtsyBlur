@@ -24,12 +24,12 @@ so you just need to add the followings to your ***build.gradle*** file:
 
 ```groovy
 dependencies {
-    compile 'com.ms-square:etsyblur:0.1.2'
+    compile 'com.ms-square:etsyblur:0.1.3'
 }
 
 android {
     defaultConfig {
-        renderscriptTargetApi 22
+        renderscriptTargetApi 23
         renderscriptSupportMode true
     }
 }
