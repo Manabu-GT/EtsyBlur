@@ -3,10 +3,13 @@
 
     <string name="app_name">EtsyBlur Demo</string>
     <string name="title_section1">Activity Feed</string>
-    <string name="title_section2">Categories</string>
+    <string name="title_section2">Blur Drawable example</string>
     <string name="title_section3">Settings</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_dialog">Open Dialog</string>
+    <string name="blur_radius">Blur Radius</string>
+    <string name="blur_intensity">Blur Intensity</string>
+    <string name="title_blur_drawable_demo">Blur Drawable Demo</string>
 
 </resources>
