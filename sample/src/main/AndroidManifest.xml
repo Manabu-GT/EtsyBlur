@@ -17,6 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BitmapDrawableActivity"
+            android:label="@string/title_blur_drawable_demo"/>
     </application>
 
 </manifest>
