@@ -46,6 +46,7 @@ public class EtsyActionBarDrawerToggle extends ActionBarDrawerToggle {
                 mContainer.getWidth(), mContainer.getHeight(), mDownSampling);
         // apply the blur using the renderscript
         Bitmap blurred = Blur.apply(mActivity, downScaled, mBlurRadius);
+        mBlurImage = (ImageView) mActivity.findViewById(R.id.blur_view);
         mBlurImage.setImageBitmap(blurred);
         downScaled.recycle();
     }
@@ -70,7 +71,7 @@ public class EtsyActionBarDrawerToggle extends ActionBarDrawerToggle {
         mBlurRadius = DEFAULT_RADIUS;
         mDownSampling = DEFAULT_DOWN_SAMPLING;
 
-        mContainer = activity.findViewById(R.id.container);
+        mContainer = activity.findViewById(R.id.fragment_container);
         mBlurImage = (ImageView) activity.findViewById(R.id.blur_view);
     }
 

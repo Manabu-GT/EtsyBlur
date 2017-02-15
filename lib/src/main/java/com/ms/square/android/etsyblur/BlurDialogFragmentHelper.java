@@ -1,11 +1,12 @@
 package com.ms.square.android.etsyblur;
 
+import android.app.DialogFragment;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,9 +38,12 @@ public class BlurDialogFragmentHelper {
 
     private int mBgColorResId;
 
-    public BlurDialogFragmentHelper(@NonNull DialogFragment fragment) {
+    private Context mContext;
+
+    public BlurDialogFragmentHelper(@NonNull DialogFragment fragment, Context ctx) {
         mFragment = fragment;
-        mAnimDuration = fragment.getActivity().getResources().getInteger(android.R.integer.config_mediumAnimTime);
+        mContext = ctx;
+        mAnimDuration = mContext.getResources().getInteger(R.integer.card_slide_time_full);
         mWindowAnimStyle = R.style.DialogSlideAnimation;
         mBgColorResId = R.color.bg_glass;
     }
@@ -87,7 +91,7 @@ public class BlurDialogFragmentHelper {
         }
 
         mBlurBgView = new View(mFragment.getActivity());
-        mBlurBgView.setBackgroundColor(ContextCompat.getColor(mFragment.getContext(), mBgColorResId));
+        mBlurBgView.setBackgroundColor(ContextCompat.getColor(mContext, mBgColorResId));
         Util.setAlpha(mBlurBgView, 0f);
 
         mBlurImgView = new ImageView(mFragment.getActivity());
@@ -101,7 +105,13 @@ public class BlurDialogFragmentHelper {
         // apply blur effect
         Bitmap bitmap = Util.drawViewToBitmap(mRoot, visibleFrame.right,
                 visibleFrame.bottom, visibleFrame.left, visibleFrame.top, 3);
-        Bitmap blurred = Blur.apply(mFragment.getActivity(), bitmap);
+        Bitmap blurred = null;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            blurred = Blur.apply(mFragment.getActivity(), bitmap);
+        } /*else {
+            blurred = Blur.apply(mFragment.getActivity(), bitmap, 1);
+        }*/
         mBlurImgView.setImageBitmap(blurred);
         bitmap.recycle();
 
