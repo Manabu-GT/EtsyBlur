@@ -18,7 +18,7 @@ import com.ms.square.android.etsyblur.BlurDialogFragmentHelper;
  */
 public class BlurDialogFragment extends DialogFragment {
 
-    private BlurDialogFragmentHelper mHelper;
+    private BlurDialogFragmentHelper helper;
 
     public static BlurDialogFragment newInstance() {
         BlurDialogFragment fragment = new BlurDialogFragment();
@@ -28,8 +28,8 @@ public class BlurDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHelper = new BlurDialogFragmentHelper(this);
-        mHelper.onCreate();
+        helper = new BlurDialogFragmentHelper(this);
+        helper.onCreate();
     }
 
     // implement either onCreateView or onCreateDialog
@@ -69,20 +69,21 @@ public class BlurDialogFragment extends DialogFragment {
         return v;
     }
 
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mHelper.onActivityCreated();
+        helper.onActivityCreated();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mHelper.onStart();
+        helper.onStart();
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        mHelper.onDismiss();
+        helper.onDismiss();
         super.onDismiss(dialog);
     }
 }

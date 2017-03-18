@@ -7,57 +7,54 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
 /**
- * Util.java
+ * ViewUtil.java
  *
  * @author Manabu-GT on 6/12/14.
  */
-public class Util {
+public class ViewUtil {
 
-    public static Bitmap drawViewToBitmap(View view, int width, int height, int downSampling) {
-        return drawViewToBitmap(view, width, height, 0f, 0f, downSampling);
+    public static final boolean IS_POST_HONEYCOMB_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1;
+
+    public static Bitmap drawViewToBitmap(View view, int width, int height, int downSampleFactor) {
+        return drawViewToBitmap(view, width, height, 0f, 0f, downSampleFactor);
     }
 
     public static Bitmap drawViewToBitmap(View view, int width, int height, float translateX,
-                                          float translateY, int downSampling) {
-        float scale = 1f / downSampling;
-        int bmpWidth = (int) (width * scale - translateX / downSampling);
-        int bmpHeight = (int) (height * scale - translateY / downSampling);
-        Bitmap dest = Bitmap.createBitmap(bmpWidth, bmpHeight, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(dest);
-        c.translate(-translateX / downSampling, -translateY / downSampling);
-        if (downSampling > 1) {
-            c.scale(scale, scale);
+                                          float translateY, int downSampleFactor) {
+        if (downSampleFactor <= 0) {
+            throw new IllegalArgumentException("downSampleFactor must be greater than 0.");
         }
+
+        // check whether valid width/height is given to create a bitmap
+        if (width <= 0 || height <= 0) {
+            return null;
+        }
+
+        int bmpWidth = (int) ((width - translateX) / downSampleFactor);
+        int bmpHeight = (int) ((height - translateY) / downSampleFactor);
+
+        Bitmap dest = Bitmap.createBitmap(bmpWidth, bmpHeight, Bitmap.Config.ARGB_8888);
+
+        Canvas c = new Canvas(dest);
+        c.translate(-translateX / downSampleFactor, -translateY / downSampleFactor);
+        c.scale(1f / downSampleFactor, 1f / downSampleFactor);
         view.draw(c);
+
         return dest;
     }
 
-    public static boolean isPostHoneycomb() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1;
-    }
-
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    public static void setAlpha(View view, float alpha) {
-        if (isPostHoneycomb()) {
-            view.setAlpha(alpha);
-        } else {
-            AlphaAnimation alphaAnimation = new AlphaAnimation(alpha, alpha);
-            // make it instant
-            alphaAnimation.setDuration(0);
-            alphaAnimation.setFillAfter(true);
-            view.startAnimation(alphaAnimation);
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    public static void animateAlpha(final View view, float fromAlpha, float toAlpha, int duration, final Runnable endAction) {
-        if (isPostHoneycomb()) {
+    public static void animateAlpha(@NonNull View view, float fromAlpha, float toAlpha, int duration,
+                                    @NonNull final Runnable endAction) {
+        if (IS_POST_HONEYCOMB_MR1) {
             ViewPropertyAnimator animator = view.animate().alpha(toAlpha).setDuration(duration);
             if (endAction != null) {
                 animator.setListener(new AnimatorListenerAdapter() {
@@ -75,7 +72,7 @@ public class Util {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         // fixes the crash bug while removing views
-                        Handler handler = new Handler();
+                        Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(endAction);
                     }
                     @Override

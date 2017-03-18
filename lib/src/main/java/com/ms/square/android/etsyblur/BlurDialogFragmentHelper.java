@@ -1,5 +1,6 @@
 package com.ms.square.android.etsyblur;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.support.annotation.ColorRes;
@@ -21,27 +22,32 @@ import android.widget.ImageView;
  */
 public class BlurDialogFragmentHelper {
 
-    private final DialogFragment mFragment;
+    private static final int DEFAULT_DOWN_SAMPLE_FACTOR = 4;
 
-    private ViewGroup mRoot;
+    private final DialogFragment fragment;
 
-    private ViewGroup mBlurContainer;
+    private ViewGroup root;
 
-    private View mBlurBgView;
+    private ViewGroup blurContainer;
 
-    private ImageView mBlurImgView;
+    private View blurBgView;
 
-    private int mAnimDuration;
+    private ImageView blurImgView;
 
-    private int mWindowAnimStyle;
+    private int animDuration;
 
-    private int mBgColorResId;
+    private int windowAnimStyle;
+
+    private int bgColorResId;
+
+    private int downSampleFactor;
 
     public BlurDialogFragmentHelper(@NonNull DialogFragment fragment) {
-        mFragment = fragment;
-        mAnimDuration = fragment.getActivity().getResources().getInteger(android.R.integer.config_mediumAnimTime);
-        mWindowAnimStyle = R.style.DialogSlideAnimation;
-        mBgColorResId = R.color.bg_glass;
+        this.fragment = fragment;
+        this.animDuration = fragment.getActivity().getResources().getInteger(android.R.integer.config_mediumAnimTime);
+        this.windowAnimStyle = R.style.DialogSlideAnimation;
+        this.bgColorResId = R.color.bg_glass;
+        this.downSampleFactor = DEFAULT_DOWN_SAMPLE_FACTOR;
     }
 
     /**
@@ -51,66 +57,64 @@ public class BlurDialogFragmentHelper {
      *                     The value cannot be negative.
      */
     public void setAnimDuration(int animDuration) {
-        mAnimDuration = animDuration;
+        this.animDuration = animDuration;
     }
 
     public void setWindowAnimStyle(@StyleRes int windowAnimStyle) {
-        mWindowAnimStyle = windowAnimStyle;
+        this.windowAnimStyle = windowAnimStyle;
     }
 
     public void setBgColorResId(@ColorRes int bgColorResId) {
-        mBgColorResId = bgColorResId;
+        this.bgColorResId = bgColorResId;
+    }
+
+    public void setDownSampleFactor(int downSampleFactor) {
+        this.downSampleFactor = downSampleFactor;
     }
 
     public void onCreate() {
-        mFragment.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Translucent_NoTitleBar);
+        fragment.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Translucent_NoTitleBar);
     }
 
     public void onActivityCreated() {
-        Window window = mFragment.getDialog().getWindow();
-        window.setWindowAnimations(mWindowAnimStyle);
+        Activity activity = fragment.getActivity();
+        Window window = fragment.getDialog().getWindow();
+        window.setWindowAnimations(windowAnimStyle);
 
         Rect visibleFrame = new Rect();
-        mRoot = (ViewGroup) mFragment.getActivity().getWindow().getDecorView();
-        mRoot.getWindowVisibleDisplayFrame(visibleFrame);
+        root = (ViewGroup) fragment.getActivity().getWindow().getDecorView();
+        root.getWindowVisibleDisplayFrame(visibleFrame);
 
-        mBlurContainer = new FrameLayout(mFragment.getActivity());
-        if (Util.isPostHoneycomb()) {
-            // window has a navigation bar
-            mBlurContainer = new FrameLayout(mFragment.getActivity());
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(visibleFrame.right - visibleFrame.left,
-                    visibleFrame.bottom - visibleFrame.top);
-            params.setMargins(visibleFrame.left, visibleFrame.top, 0, 0);
-            mBlurContainer.setLayoutParams(params);
-        } else {
-            mBlurContainer.setPadding(visibleFrame.left, visibleFrame.top, 0, 0);
-        }
+        blurContainer = new FrameLayout(activity);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(visibleFrame.right - visibleFrame.left,
+                visibleFrame.bottom - visibleFrame.top);
+        params.setMargins(visibleFrame.left, visibleFrame.top, 0, 0);
+        blurContainer.setLayoutParams(params);
 
-        mBlurBgView = new View(mFragment.getActivity());
-        mBlurBgView.setBackgroundColor(ContextCompat.getColor(mFragment.getContext(), mBgColorResId));
-        Util.setAlpha(mBlurBgView, 0f);
+        blurBgView = new View(activity);
+        blurBgView.setBackgroundColor(ContextCompat.getColor(activity, bgColorResId));
+        blurBgView.setAlpha(0f);
 
-        mBlurImgView = new ImageView(mFragment.getActivity());
-        Util.setAlpha(mBlurImgView, 0f);
+        blurImgView = new ImageView(activity);
+        blurImgView.setAlpha(0f);
 
-        mBlurContainer.addView(mBlurImgView);
-        mBlurContainer.addView(mBlurBgView);
+        blurContainer.addView(blurImgView);
+        blurContainer.addView(blurBgView);
 
-        mRoot.addView(mBlurContainer);
+        root.addView(blurContainer);
 
         // apply blur effect
-        Bitmap bitmap = Util.drawViewToBitmap(mRoot, visibleFrame.right,
-                visibleFrame.bottom, visibleFrame.left, visibleFrame.top, 3);
-        Bitmap blurred = Blur.apply(mFragment.getActivity(), bitmap);
-        mBlurImgView.setImageBitmap(blurred);
-        bitmap.recycle();
+        Bitmap bitmap = ViewUtil.drawViewToBitmap(root, visibleFrame.right,
+                visibleFrame.bottom, visibleFrame.left, visibleFrame.top, downSampleFactor);
+        Bitmap blurred = Blur.apply(activity, bitmap);
+        blurImgView.setImageBitmap(blurred);
 
-        View view = mFragment.getView();
+        View view = fragment.getView();
         if (view != null) {
             view.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    mFragment.dismiss();
+                    fragment.dismiss();
                     return true;
                 }
             });
@@ -126,16 +130,16 @@ public class BlurDialogFragmentHelper {
     }
 
     private void startEnterAnimation() {
-        Util.animateAlpha(mBlurBgView, 0f, 1f, mAnimDuration, null);
-        Util.animateAlpha(mBlurImgView, 0f, 1f, mAnimDuration, null);
+        ViewUtil.animateAlpha(blurBgView, 0f, 1f, animDuration, null);
+        ViewUtil.animateAlpha(blurImgView, 0f, 1f, animDuration, null);
     }
 
     private void startExitAnimation() {
-        Util.animateAlpha(mBlurBgView, 1f, 0f, mAnimDuration, null);
-        Util.animateAlpha(mBlurImgView, 1f, 0f, mAnimDuration, new Runnable() {
+        ViewUtil.animateAlpha(blurBgView, 1f, 0f, animDuration, null);
+        ViewUtil.animateAlpha(blurImgView, 1f, 0f, animDuration, new Runnable() {
             @Override
             public void run() {
-                mRoot.removeView(mBlurContainer);
+                root.removeView(blurContainer);
             }
         });
     }
