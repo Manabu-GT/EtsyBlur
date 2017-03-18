@@ -16,15 +16,15 @@ import android.widget.ImageView;
 public class EtsyActionBarDrawerToggle extends ActionBarDrawerToggle {
 
     private static final int DEFAULT_RADIUS = 10;
-    private static final int DEFAULT_DOWN_SAMPLING = 3;
+    private static final int DEFAULT_DOWN_SAMPLE_FACTOR = 4;
 
-    private Activity mActivity;
+    private Activity activity;
 
-    private View mContainer;
-    private ImageView mBlurImage;
+    private View container;
+    private ImageView blurImage;
 
-    private int mBlurRadius;
-    private int mDownSampling;
+    private int blurRadius;
+    private int downSampleFactor;
 
     public EtsyActionBarDrawerToggle(Activity activity, DrawerLayout drawerLayout,
                                      int openDrawerContentDescRes, int closeDrawerContentDescRes) {
@@ -39,46 +39,45 @@ public class EtsyActionBarDrawerToggle extends ActionBarDrawerToggle {
     }
 
     public void setBlurImage() {
-        mBlurImage.setImageBitmap(null);
-        mBlurImage.setVisibility(View.VISIBLE);
+        blurImage.setImageBitmap(null);
+        blurImage.setVisibility(View.VISIBLE);
         // do the downscaling for faster processing
-        Bitmap downScaled = Util.drawViewToBitmap(mContainer,
-                mContainer.getWidth(), mContainer.getHeight(), mDownSampling);
-        // apply the blur using the renderscript
-        Bitmap blurred = Blur.apply(mActivity, downScaled, mBlurRadius);
-        mBlurImage.setImageBitmap(blurred);
-        downScaled.recycle();
+        Bitmap downScaled = ViewUtil.drawViewToBitmap(container,
+                container.getWidth(), container.getHeight(), downSampleFactor);
+        // apply the blur
+        Bitmap blurred = Blur.apply(activity, downScaled, blurRadius);
+        blurImage.setImageBitmap(blurred);
     }
 
     public void clearBlurImage() {
-        mBlurImage.setVisibility(View.GONE);
-        mBlurImage.setImageBitmap(null);
+        blurImage.setVisibility(View.GONE);
+        blurImage.setImageBitmap(null);
     }
 
     public void setBlurRadius(int blurRadius) {
         if (0 < blurRadius && blurRadius <= 25) {
-            mBlurRadius = blurRadius;
+            this.blurRadius = blurRadius;
         }
     }
 
-    public void setDownSampling(int downSampling) {
-        mDownSampling = downSampling;
+    public void setDownSampleFactor(int downSampleFactor) {
+        this.downSampleFactor = downSampleFactor;
     }
 
     private void init(Activity activity) {
-        mActivity = activity;
-        mBlurRadius = DEFAULT_RADIUS;
-        mDownSampling = DEFAULT_DOWN_SAMPLING;
+        this.activity = activity;
+        this.blurRadius = DEFAULT_RADIUS;
+        this.downSampleFactor = DEFAULT_DOWN_SAMPLE_FACTOR;
 
-        mContainer = activity.findViewById(R.id.container);
-        mBlurImage = (ImageView) activity.findViewById(R.id.blur_view);
+        this.container = activity.findViewById(R.id.container);
+        this.blurImage = (ImageView) activity.findViewById(R.id.blur_view);
     }
 
     private void setBlurAlpha(float slideOffset) {
-        if (mBlurImage.getVisibility() != View.VISIBLE) {
+        if (blurImage.getVisibility() != View.VISIBLE) {
             setBlurImage();
         }
-        Util.setAlpha(mBlurImage, slideOffset);
+        blurImage.setAlpha(slideOffset);
     }
 
     @Override

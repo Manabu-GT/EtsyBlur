@@ -15,7 +15,7 @@ Try out the sample application:
 
 Requirements
 -------------
-API Level 8 (Froyo) and above.
+API Level 11 (Honeycomb) and above.
 
 Setup
 ------
@@ -24,12 +24,12 @@ so you just need to add the followings to your ***build.gradle*** file:
 
 ```groovy
 dependencies {
-    compile 'com.ms-square:etsyblur:0.1.3'
+    compile 'com.ms-square:etsyblur:0.1.4'
 }
 
 android {
     defaultConfig {
-        renderscriptTargetApi 23
+        renderscriptTargetApi 25
         renderscriptSupportMode true
     }
 }
