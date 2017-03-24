@@ -159,7 +159,7 @@ public abstract class BlurDialogFragment extends DialogFragment {
 
         // apply blur effect
         Bitmap bitmapToBlur = ViewUtil.drawViewToBitmap(root, visibleFrame.right,
-                visibleFrame.bottom, visibleFrame.left, visibleFrame.top, blurConfig().downSampleFactor(),
+                visibleFrame.bottom, visibleFrame.left, visibleFrame.top, blurConfig().downScaleFactor(),
                 blurConfig().overlayColorToBlur());
         blur.execute(bitmapToBlur, true, new BlurEngine.Callback() {
             @Override

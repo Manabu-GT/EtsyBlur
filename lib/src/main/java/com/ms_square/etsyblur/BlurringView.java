@@ -77,15 +77,15 @@ public class BlurringView extends View {
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.BlurringView);
         int overlayColorToBlur = typedArray.getInt(R.styleable.BlurringView_overlayColorToBlur, BlurConfig.DEFAULT_OVERLAY_COLOR_TO_BLUR);
-        int blurRadius = typedArray.getInt(R.styleable.BlurringView_blurRadius, BlurConfig.DEFAULT_RADIUS);
-        int downSampleFactor = typedArray.getInt(R.styleable.BlurringView_downSampleFactor, BlurConfig.DEFAULT_DOWN_SAMPLE_FACTOR);
+        int blurRadius = typedArray.getInt(R.styleable.BlurringView_radius, BlurConfig.DEFAULT_RADIUS);
+        int downScaleFactor = typedArray.getInt(R.styleable.BlurringView_downScaleFactor, BlurConfig.DEFAULT_DOWN_SCALE_FACTOR);
         boolean allowFallback = typedArray.getBoolean(R.styleable.BlurringView_allowFallback, BlurConfig.DEFAULT_ALLOW_FALLBACK);
         overlayColor = typedArray.getInt(R.styleable.BlurringView_overlayColor, Color.TRANSPARENT);
         typedArray.recycle();
 
         blurConfig = new BlurConfig.Builder()
                 .radius(blurRadius)
-                .downSampleFactor(downSampleFactor)
+                .downScaleFactor(downScaleFactor)
                 .allowFallback(allowFallback)
                 .overlayColorToBlur(overlayColorToBlur)
                 .build();
@@ -144,7 +144,7 @@ public class BlurringView extends View {
                 if (blurred != null) {
                     canvas.save();
                     canvas.translate(blurredView.getX() - getX(), blurredView.getY() - getY());
-                    canvas.scale(blurConfig.downSampleFactor(), blurConfig.downSampleFactor());
+                    canvas.scale(blurConfig.downScaleFactor(), blurConfig.downScaleFactor());
                     canvas.drawBitmap(blurred, 0, 0, null);
                     canvas.restore();
                 }
@@ -188,9 +188,9 @@ public class BlurringView extends View {
             blurredViewWidth = newWidth;
             blurredViewHeight = newHeight;
 
-            int downSampleFactor = blurConfig.downSampleFactor();
-            int scaledWidth = newWidth / downSampleFactor;
-            int scaledHeight = newHeight / downSampleFactor;
+            int downScaleFactor = blurConfig.downScaleFactor();
+            int scaledWidth = newWidth / downScaleFactor;
+            int scaledHeight = newHeight / downScaleFactor;
 
             if (bitmapToBlur == null || scaledWidth != bitmapToBlur.getWidth()
                     || scaledHeight != bitmapToBlur.getHeight()) {
@@ -208,7 +208,7 @@ public class BlurringView extends View {
             }
 
             blurringCanvas = new Canvas(bitmapToBlur);
-            blurringCanvas.scale(1f / downSampleFactor, 1f / downSampleFactor);
+            blurringCanvas.scale(1f / downScaleFactor, 1f / downScaleFactor);
         }
 
         return true;

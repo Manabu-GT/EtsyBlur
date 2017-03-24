@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="BlurringView">
-        <attr name="blurRadius" format="integer"/>
-        <attr name="downSampleFactor" format="integer"/>
+        <attr name="radius" format="integer"/>
+        <attr name="downScaleFactor" format="integer"/>
         <attr name="overlayColorToBlur" format="color"/>
         <attr name="allowFallback" format="boolean"/>
         <attr name="overlayColor" format="color"/>

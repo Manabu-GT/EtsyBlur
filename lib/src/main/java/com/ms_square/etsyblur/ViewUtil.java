@@ -26,13 +26,13 @@ public final class ViewUtil {
 
     public static final boolean IS_POST_HONEYCOMB_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1;
 
-    public static Bitmap drawViewToBitmap(View view, int width, int height, int downSampleFactor, @ColorInt int overlayColor) {
-        return drawViewToBitmap(view, width, height, 0f, 0f, downSampleFactor, overlayColor);
+    public static Bitmap drawViewToBitmap(View view, int width, int height, int downScaleFactor, @ColorInt int overlayColor) {
+        return drawViewToBitmap(view, width, height, 0f, 0f, downScaleFactor, overlayColor);
     }
 
     public static Bitmap drawViewToBitmap(View view, int width, int height, float translateX,
-                                          float translateY, int downSampleFactor, @ColorInt int overlayColor) {
-        if (downSampleFactor <= 0) {
+                                          float translateY, int downScaleFactor, @ColorInt int overlayColor) {
+        if (downScaleFactor <= 0) {
             throw new IllegalArgumentException("downSampleFactor must be greater than 0.");
         }
 
@@ -41,14 +41,14 @@ public final class ViewUtil {
             return null;
         }
 
-        int bmpWidth = (int) ((width - translateX) / downSampleFactor);
-        int bmpHeight = (int) ((height - translateY) / downSampleFactor);
+        int bmpWidth = (int) ((width - translateX) / downScaleFactor);
+        int bmpHeight = (int) ((height - translateY) / downScaleFactor);
 
         Bitmap dest = Bitmap.createBitmap(bmpWidth, bmpHeight, Bitmap.Config.ARGB_8888);
 
         Canvas c = new Canvas(dest);
-        c.translate(-translateX / downSampleFactor, -translateY / downSampleFactor);
-        c.scale(1f / downSampleFactor, 1f / downSampleFactor);
+        c.translate(-translateX / downScaleFactor, -translateY / downScaleFactor);
+        c.scale(1f / downScaleFactor, 1f / downScaleFactor);
         view.draw(c);
 
         if (overlayColor != Color.TRANSPARENT) {
