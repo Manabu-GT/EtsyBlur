@@ -145,7 +145,7 @@ public class BlurringView extends View {
                     canvas.save();
                     canvas.translate(blurredView.getX() - getX(), blurredView.getY() - getY());
                     canvas.scale(blurConfig.downSampleFactor(), blurConfig.downSampleFactor());
-                    canvas.drawBitmap(bitmapToBlur, 0, 0, null);
+                    canvas.drawBitmap(blurred, 0, 0, null);
                     canvas.restore();
                 }
 
