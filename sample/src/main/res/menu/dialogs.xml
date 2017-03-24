@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".NavigationDrawerActivity" >
+    <item android:id="@+id/action_dialog1"
+        android:title="@string/action_dialog1"
+        app:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/action_dialog2"
+        android:title="@string/action_dialog2"
+        app:showAsAction="withText|ifRoom" />
+</menu>

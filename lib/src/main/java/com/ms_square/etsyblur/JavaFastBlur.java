@@ -1,69 +1,83 @@
-package com.ms.square.android.etsyblur;
+package com.ms_square.etsyblur;
 
-import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.os.Debug;
 import android.support.annotation.NonNull;
-import android.support.v8.renderscript.Allocation;
-import android.support.v8.renderscript.Element;
-import android.support.v8.renderscript.RSRuntimeException;
-import android.support.v8.renderscript.RenderScript;
-import android.support.v8.renderscript.ScriptIntrinsicBlur;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import java.util.Locale;
 
 /**
- * Blur.java
+ * JavaFastBlur.java
  *
- * @author Manabu-GT on 6/12/14.
+ * @author Manabu-GT on 3/22/17.
  */
-public class Blur {
+class JavaFastBlur extends BaseBlurEngine {
 
-    private static final int DEFAULT_BLUR_RADIUS = 10;
+    private static final String TAG = JavaFastBlur.class.getSimpleName();
 
-    public static Bitmap apply(@NonNull Context context, @NonNull Bitmap sentBitmap) {
-        return apply(context, sentBitmap, DEFAULT_BLUR_RADIUS);
+    public JavaFastBlur(@NonNull BlurConfig blurConfig) {
+        super(blurConfig);
     }
 
-    public static Bitmap apply(@NonNull Context context, @NonNull Bitmap bitmap, int radius) {
+    @Override
+    public Bitmap execute(@NonNull Bitmap inBitmap, boolean canReuseInBitmap) {
+        return fastBlur(inBitmap, blurConfig.radius(), canReuseInBitmap);
+    }
 
-        RenderScript rs = null;
-        Allocation input = null;
-        Allocation output = null;
-        ScriptIntrinsicBlur scriptBlur = null;
+    @Override
+    public Bitmap execute(@NonNull Bitmap inBitmap, @NonNull Bitmap outBitmap) {
+        return fastBlur(inBitmap, outBitmap, blurConfig.radius());
+    }
 
-        try {
-            rs = RenderScript.create(context);
-            input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
-                    Allocation.USAGE_SCRIPT);
-            output = Allocation.createTyped(rs, input.getType());
-            scriptBlur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+    @Override
+    public void execute(@NonNull Bitmap inBitmap, boolean canReuseInBitmap, @NonNull Callback callback) {
+        if (shouldAsync(inBitmap.getWidth(), inBitmap.getHeight(), blurConfig.radius())) {
+            asyncTasks.add(new FastBlurAsyncTask(inBitmap, null, canReuseInBitmap, callback).execute(blurConfig));
+        } else {
+            callback.onFinished(fastBlur(inBitmap, blurConfig.radius(), canReuseInBitmap));
+        }
+    }
 
-            scriptBlur.setRadius(radius);
-            scriptBlur.setInput(input);
-            scriptBlur.forEach(output);
-            output.copyTo(bitmap);
-        } catch (RSRuntimeException e) {
-            // if renderscript is not available, fallback to the Stack Blur
-            bitmap = fastBlur(bitmap, radius, true);
-        } finally {
-            // clean up renderscript resources
-            if (rs != null) {
-                rs.destroy();
-            }
-            if (input != null) {
-                input.destroy();
-            }
-            if (output != null) {
-                output.destroy();
-            }
-            if (scriptBlur != null) {
-                scriptBlur.destroy();
-            }
+    @Override
+    public void execute(@NonNull Bitmap inBitmap, @NonNull Bitmap outBitmap, @NonNull Callback callback) {
+        if (shouldAsync(inBitmap.getWidth(), inBitmap.getHeight(), blurConfig.radius())) {
+            asyncTasks.add(new FastBlurAsyncTask(inBitmap, outBitmap, callback).execute(blurConfig));
+        } else {
+            callback.onFinished(fastBlur(inBitmap, outBitmap, blurConfig.radius()));
+        }
+    }
+
+    @Override
+    public String methodDescription() {
+        return "Java's FastBlur implementation";
+    }
+
+    @Override
+    long calculateComputation(int bmpWidth, int bmpHeight, int radius) {
+        return bmpHeight * (2 * radius + bmpWidth) + bmpWidth * (2 * radius + bmpHeight);
+    }
+
+    @Override
+    boolean shouldAsync(int bmpWidth, int bmpHeight, int radius) {
+        return blurConfig.asyncPolicy().shouldAsync(false, calculateComputation(bmpWidth, bmpHeight, radius));
+    }
+
+    private Bitmap fastBlur(Bitmap inBitmap, int radius, boolean canReuseInBitmap) {
+        Bitmap outBitmap;
+        if (canReuseInBitmap) {
+            outBitmap = inBitmap;
+        } else {
+            outBitmap = inBitmap.copy(inBitmap.getConfig(), true);
         }
 
-        return bitmap;
+        return fastBlur(inBitmap, outBitmap, radius);
     }
 
     // Ref...http://stackoverflow.com/questions/2067955/fast-bitmap-blur-for-android-sdk
-    private static Bitmap fastBlur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
+    private Bitmap fastBlur(Bitmap inBitmap, Bitmap outBitmap, int radius) {
 
         // Stack Blur v1.0 from
         // http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html
@@ -93,22 +107,17 @@ public class Blur {
         //
         // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
 
-        Bitmap bitmap;
-        if (canReuseInBitmap) {
-            bitmap = sentBitmap;
-        } else {
-            bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
-        }
+        long start = Debug.threadCpuTimeNanos();
 
         if (radius < 1) {
-            return (null);
+            return null;
         }
 
-        int w = bitmap.getWidth();
-        int h = bitmap.getHeight();
+        int w = inBitmap.getWidth();
+        int h = inBitmap.getHeight();
 
         int[] pix = new int[w * h];
-        bitmap.getPixels(pix, 0, w, 0, 0, w, h);
+        inBitmap.getPixels(pix, 0, w, 0, 0, w, h);
 
         int wm = w - 1;
         int hm = h - 1;
@@ -293,8 +302,64 @@ public class Blur {
             }
         }
 
-        bitmap.setPixels(pix, 0, w, 0, 0, w, h);
+        outBitmap.setPixels(pix, 0, w, 0, 0, w, h);
 
-        return bitmap;
+        if (start > 0) {
+            long duration = Debug.threadCpuTimeNanos() - start;
+            blurConfig.asyncPolicy().putSampleData(false, calculateComputation(w, h, radius), duration);
+            if (blurConfig.debug()) {
+                Log.d(TAG, String.format(Locale.US, "fastBlur() took %d ms.", duration / 1000000L));
+            }
+        }
+
+        return outBitmap;
+    }
+
+    class FastBlurAsyncTask extends AsyncTask<BlurConfig, Void, Bitmap> {
+
+        private final Bitmap inBitmap;
+        private final Bitmap outBitmap;
+        private final boolean canReuseInBitmap;
+        private final Callback callback;
+
+        public FastBlurAsyncTask(@NonNull Bitmap inBitmap, @Nullable Bitmap outBitmap,
+                                 @NonNull Callback callback) {
+            this(inBitmap, outBitmap, false, callback);
+        }
+
+        public FastBlurAsyncTask(@NonNull Bitmap inBitmap, @Nullable Bitmap outBitmap,
+                                 boolean canReuseInBitmap, @NonNull Callback callback) {
+            this.inBitmap = inBitmap;
+            this.outBitmap = outBitmap;
+            this.canReuseInBitmap = canReuseInBitmap;
+            this.callback = callback;
+        }
+
+        @Override
+        protected Bitmap doInBackground(BlurConfig... params) {
+            BlurConfig config = params[0];
+            if (isCancelled()) {
+                return null;
+            }
+            if (blurConfig.debug()) {
+                Log.d(TAG, "Running in background...");
+            }
+            if (outBitmap != null) {
+                return fastBlur(inBitmap, outBitmap, config.radius());
+            } else {
+                return fastBlur(inBitmap, config.radius(), canReuseInBitmap);
+            }
+        }
+
+        @Override
+        protected void onCancelled(Bitmap blurredBitmap) {
+            asyncTasks.remove(this);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap blurredBitmap) {
+            callback.onFinished(blurredBitmap);
+            asyncTasks.remove(this);
+        }
     }
 }

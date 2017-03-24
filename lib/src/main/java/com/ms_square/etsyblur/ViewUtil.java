@@ -1,13 +1,16 @@
-package com.ms.square.android.etsyblur;
+package com.ms_square.etsyblur;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
@@ -19,16 +22,16 @@ import android.view.animation.Animation;
  *
  * @author Manabu-GT on 6/12/14.
  */
-public class ViewUtil {
+public final class ViewUtil {
 
     public static final boolean IS_POST_HONEYCOMB_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1;
 
-    public static Bitmap drawViewToBitmap(View view, int width, int height, int downSampleFactor) {
-        return drawViewToBitmap(view, width, height, 0f, 0f, downSampleFactor);
+    public static Bitmap drawViewToBitmap(View view, int width, int height, int downSampleFactor, @ColorInt int overlayColor) {
+        return drawViewToBitmap(view, width, height, 0f, 0f, downSampleFactor, overlayColor);
     }
 
     public static Bitmap drawViewToBitmap(View view, int width, int height, float translateX,
-                                          float translateY, int downSampleFactor) {
+                                          float translateY, int downSampleFactor, @ColorInt int overlayColor) {
         if (downSampleFactor <= 0) {
             throw new IllegalArgumentException("downSampleFactor must be greater than 0.");
         }
@@ -47,6 +50,13 @@ public class ViewUtil {
         c.translate(-translateX / downSampleFactor, -translateY / downSampleFactor);
         c.scale(1f / downSampleFactor, 1f / downSampleFactor);
         view.draw(c);
+
+        if (overlayColor != Color.TRANSPARENT) {
+            Paint paint = new Paint();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setColor(overlayColor);
+            c.drawPaint(paint);
+        }
 
         return dest;
     }

@@ -5,23 +5,21 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".NavigationDrawerActivity">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
     <FrameLayout
-        android:id="@id/container"
+        android:id="@+id/content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- needed w/this id for EtsyLib to work -->
-    <ImageView
-        android:id="@id/blur_view"
+    <!-- needed w/this id for EtsyBlur Lib to work -->
+    <com.ms_square.etsyblur.BlurringView
+        android:id="@id/blurring_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:visibility="gone">
-    </ImageView>
+        android:layout_height="match_parent">
+    </com.ms_square.etsyblur.BlurringView>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right
