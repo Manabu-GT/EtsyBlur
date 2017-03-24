@@ -201,26 +201,24 @@ In this library, it's being used to automatically blur the content within Drawer
 * downScaleFactor - [integer]
 >Factor used to down scale the target view before blurring.
  Making this value higher results in faster blurring time and less memory allocation, but degreades final rendering quality.
-
-* overlayColorToBlur - [color]
->Color used to overrlay the target view to blur
+ 
+* overlayColor - [color]
+>Color used to overrlay the blurred image
 
 * allowFallback - [boolean]
 >If true, it fall backs to Java's fastblur implementation when rederscript is not available. If false, performs no blurring in such case.
 
-* overlayColor - [color]
->Color used to overrlay the blurred image
+* debug - [boolean]
+>When set to true, it will output logcat debug messages of blur operations such as blur method used, if executing in background, and time each blur operation took.
 
 #### [BlurConfig][4]
 
 You can also set the configuration dynamically by calling **void blurConfig(BlurConfig config)** method of BlurringView at runtime. Please not that it must be called before BlurringView's onAttachedToWindow() gets called. When called, it will overwrite the configuration pased through custom attributes in your layout xml file.
-All the custom attribute options except **overlayColor** plus the following parameters are available.
+All the custom attribute options plus the following parameter is currently  available.
 
 * asyncPolicy - [AsyncPolicy](#asyncpolicy)
->Policy used to determine whether to execute blurring operation in background thread or not.
 
-* debug - [boolean]
->When set to true, it will output logcat debug messages of blur operations such as blur method used, if executing in background, and time each blur operation took.
+>Policy used to determine whether to execute blurring operation in background thread or not.
 
 *NOTE:*
 

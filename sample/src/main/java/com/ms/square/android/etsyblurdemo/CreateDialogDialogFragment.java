@@ -3,7 +3,6 @@ package com.ms.square.android.etsyblurdemo;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 
@@ -36,14 +35,9 @@ public class CreateDialogDialogFragment extends BlurDialogFragment {
     @NonNull
     protected BlurConfig blurConfig() {
         return new BlurConfig.Builder()
+                .overlayColor(Color.argb(136, 255, 255, 255))  // semi-transparent white color
                 .asyncPolicy(SmartAsyncPolicyHolder.INSTANCE.smartAsyncPolicy())
                 .debug(true)
                 .build();
-    }
-
-    @ColorInt
-    protected int overlayColor() {
-        // semi-transparent white color
-        return Color.argb(136, 255, 255, 255);
     }
 }
