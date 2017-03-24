@@ -5,11 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -35,13 +32,11 @@ public abstract class BlurDialogFragment extends DialogFragment {
 
     public static final boolean DEFAULT_BACKGROUND_DIMMING_ENABLED = false;
 
-    public static final int DEFAULT_OVERLAY_COLOR = Color.TRANSPARENT;
-
     private Blur blur;
 
     private ViewGroup root;
 
-    private ImageViewWithOverlay blurImgView;
+    private ImageView blurImgView;
 
     @Override
     public void onAttach(Context context) {
@@ -132,16 +127,6 @@ public abstract class BlurDialogFragment extends DialogFragment {
         return DEFAULT_ANIM_DURATION;
     }
 
-    /**
-     * Overlay color which is drawn on top of the blurred image.
-     *
-     * @return overlay color to be used
-     */
-    @ColorInt
-    protected int overlayColor() {
-        return DEFAULT_OVERLAY_COLOR;
-    }
-
     private void setUpBlurringViews() {
         Rect visibleFrame = new Rect();
         root.getWindowVisibleDisplayFrame(visibleFrame);
@@ -150,9 +135,8 @@ public abstract class BlurDialogFragment extends DialogFragment {
                 visibleFrame.bottom - visibleFrame.top);
         params.setMargins(visibleFrame.left, visibleFrame.top, 0, 0);
 
-        blurImgView = new ImageViewWithOverlay(root.getContext());
+        blurImgView = new ImageView(root.getContext());
         blurImgView.setLayoutParams(params);
-        blurImgView.setOverlayColor(overlayColor());
         blurImgView.setAlpha(0f);
 
         root.addView(blurImgView);
@@ -160,7 +144,7 @@ public abstract class BlurDialogFragment extends DialogFragment {
         // apply blur effect
         Bitmap bitmapToBlur = ViewUtil.drawViewToBitmap(root, visibleFrame.right,
                 visibleFrame.bottom, visibleFrame.left, visibleFrame.top, blurConfig().downScaleFactor(),
-                blurConfig().overlayColorToBlur());
+                blurConfig().overlayColor());
         blur.execute(bitmapToBlur, true, new BlurEngine.Callback() {
             @Override
             public void onFinished(@Nullable Bitmap blurredBitmap) {
@@ -201,26 +185,4 @@ public abstract class BlurDialogFragment extends DialogFragment {
             return true;
         }
     };
-
-    private static class ImageViewWithOverlay extends ImageView {
-
-        @ColorInt
-        private int overlayColor;
-
-        public ImageViewWithOverlay(Context context) {
-            super(context);
-        }
-
-        public void setOverlayColor(@ColorInt int overlayColor) {
-            this.overlayColor = overlayColor;
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-            if (overlayColor != Color.TRANSPARENT) {
-                canvas.drawColor(overlayColor);
-            }
-        }
-    }
 }

@@ -13,13 +13,13 @@ public class BlurConfig {
 
     public static final int DEFAULT_RADIUS = 10;
     public static final int DEFAULT_DOWN_SCALE_FACTOR = 4;
-    public static final int DEFAULT_OVERLAY_COLOR_TO_BLUR = Color.TRANSPARENT;
+    public static final int DEFAULT_OVERLAY_COLOR = Color.TRANSPARENT;
     public static final boolean DEFAULT_ALLOW_FALLBACK = true;
     public static final AsyncPolicy DEFAULT_ASYNC_POLICY = new SimpleAsyncPolicy();
     public static final boolean DEFAULT_DEBUG = false;
 
     public static final BlurConfig DEFAULT_CONFIG = new BlurConfig(DEFAULT_RADIUS,
-            DEFAULT_DOWN_SCALE_FACTOR, DEFAULT_OVERLAY_COLOR_TO_BLUR, DEFAULT_ALLOW_FALLBACK,
+            DEFAULT_DOWN_SCALE_FACTOR, DEFAULT_OVERLAY_COLOR, DEFAULT_ALLOW_FALLBACK,
             DEFAULT_ASYNC_POLICY, DEFAULT_DEBUG);
 
     private final int radius;
@@ -27,7 +27,7 @@ public class BlurConfig {
     private final int downScaleFactor;
 
     @ColorInt
-    private final int overlayColorToBlur;
+    private final int overlayColor;
 
     private final boolean allowFallback;
 
@@ -35,11 +35,11 @@ public class BlurConfig {
 
     private final boolean debug;
 
-    private BlurConfig(int radius, int downScaleFactor, @ColorInt int overlayColorToBlur,
+    private BlurConfig(int radius, int downScaleFactor, @ColorInt int overlayColor,
                        boolean allowFallback, @NonNull AsyncPolicy asyncPolicy, boolean debug) {
         this.radius = radius;
         this.downScaleFactor = downScaleFactor;
-        this.overlayColorToBlur = overlayColorToBlur;
+        this.overlayColor = overlayColor;
         this.allowFallback = allowFallback;
         this.asyncPolicy = asyncPolicy;
         this.debug = debug;
@@ -53,8 +53,8 @@ public class BlurConfig {
         return downScaleFactor;
     }
 
-    public int overlayColorToBlur() {
-        return overlayColorToBlur;
+    public int overlayColor() {
+        return overlayColor;
     }
 
     public boolean allowFallback() {
@@ -88,7 +88,7 @@ public class BlurConfig {
         private int downScaleFactor;
 
         @ColorInt
-        private int overlayColorToBlur;
+        private int overlayColor;
 
         private boolean allowFallback;
 
@@ -99,7 +99,7 @@ public class BlurConfig {
         public Builder() {
             radius = DEFAULT_RADIUS;
             downScaleFactor = DEFAULT_DOWN_SCALE_FACTOR;
-            overlayColorToBlur = DEFAULT_OVERLAY_COLOR_TO_BLUR;
+            overlayColor = DEFAULT_OVERLAY_COLOR;
             allowFallback = DEFAULT_ALLOW_FALLBACK;
             asyncPolicy = DEFAULT_ASYNC_POLICY;
             debug = DEFAULT_DEBUG;
@@ -117,8 +117,8 @@ public class BlurConfig {
             return this;
         }
 
-        public Builder overlayColorToBlur(int overlayColorToBlur) {
-            this.overlayColorToBlur = overlayColorToBlur;
+        public Builder overlayColor(int overlayColor) {
+            this.overlayColor = overlayColor;
             return this;
         }
 
@@ -138,7 +138,7 @@ public class BlurConfig {
         }
 
         public BlurConfig build() {
-            return new BlurConfig(radius, downScaleFactor, overlayColorToBlur,
+            return new BlurConfig(radius, downScaleFactor, overlayColor,
                     allowFallback, asyncPolicy, debug);
         }
     }

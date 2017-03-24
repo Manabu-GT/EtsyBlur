@@ -29,9 +29,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -40,8 +38,6 @@ import android.view.ViewTreeObserver;
 public class BlurringView extends View {
 
     private static final String TAG = BlurringView.class.getSimpleName();
-
-    private final Paint paint;
 
     private BlurConfig blurConfig;
 
@@ -56,8 +52,6 @@ public class BlurringView extends View {
     private Bitmap bitmapToBlur;
 
     private Canvas blurringCanvas;
-
-    private int overlayColor;
 
     /**
      *  Flag used to prevent draw() from being recursively called when blurredView is set to the parent view
@@ -76,23 +70,18 @@ public class BlurringView extends View {
         super(context, attrs, defStyleAttr);
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.BlurringView);
-        int overlayColorToBlur = typedArray.getInt(R.styleable.BlurringView_overlayColorToBlur, BlurConfig.DEFAULT_OVERLAY_COLOR_TO_BLUR);
+        int overlayColor = typedArray.getInt(R.styleable.BlurringView_overlayColor, BlurConfig.DEFAULT_OVERLAY_COLOR);
         int blurRadius = typedArray.getInt(R.styleable.BlurringView_radius, BlurConfig.DEFAULT_RADIUS);
         int downScaleFactor = typedArray.getInt(R.styleable.BlurringView_downScaleFactor, BlurConfig.DEFAULT_DOWN_SCALE_FACTOR);
         boolean allowFallback = typedArray.getBoolean(R.styleable.BlurringView_allowFallback, BlurConfig.DEFAULT_ALLOW_FALLBACK);
-        overlayColor = typedArray.getInt(R.styleable.BlurringView_overlayColor, Color.TRANSPARENT);
         typedArray.recycle();
 
         blurConfig = new BlurConfig.Builder()
                 .radius(blurRadius)
                 .downScaleFactor(downScaleFactor)
                 .allowFallback(allowFallback)
-                .overlayColorToBlur(overlayColorToBlur)
+                .overlayColor(overlayColor)
                 .build();
-
-        paint = new Paint();
-        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(overlayColorToBlur);
     }
 
     @Override
@@ -139,10 +128,6 @@ public class BlurringView extends View {
 
                 blurredView.draw(blurringCanvas);
 
-                if (blurConfig.overlayColorToBlur() != Color.TRANSPARENT) {
-                    blurringCanvas.drawPaint(paint);
-                }
-
                 Bitmap blurred = blur.execute(bitmapToBlur, true);
 
                 if (blurred != null) {
@@ -153,7 +138,9 @@ public class BlurringView extends View {
                     canvas.restore();
                 }
 
-                canvas.drawColor(overlayColor);
+                if (blurConfig.overlayColor() != Color.TRANSPARENT) {
+                    canvas.drawColor(blurConfig.overlayColor());
+                }
             }
         }
         if (isParent) {
@@ -178,10 +165,6 @@ public class BlurringView extends View {
             throw new IllegalStateException("BlurConfig must be set before onAttachedToWindow() gets called.");
         }
         this.blurConfig = blurConfig;
-    }
-
-    public void overlayColor(@ColorInt int overlayColor) {
-        this.overlayColor = overlayColor;
     }
 
     private boolean prepare() {
