@@ -74,6 +74,7 @@ public class BlurringView extends View {
         int blurRadius = typedArray.getInt(R.styleable.BlurringView_radius, BlurConfig.DEFAULT_RADIUS);
         int downScaleFactor = typedArray.getInt(R.styleable.BlurringView_downScaleFactor, BlurConfig.DEFAULT_DOWN_SCALE_FACTOR);
         boolean allowFallback = typedArray.getBoolean(R.styleable.BlurringView_allowFallback, BlurConfig.DEFAULT_ALLOW_FALLBACK);
+        boolean debug = typedArray.getBoolean(R.styleable.BlurringView_debug, BlurConfig.DEFAULT_DEBUG);
         typedArray.recycle();
 
         blurConfig = new BlurConfig.Builder()
@@ -81,6 +82,7 @@ public class BlurringView extends View {
                 .downScaleFactor(downScaleFactor)
                 .allowFallback(allowFallback)
                 .overlayColor(overlayColor)
+                .debug(debug)
                 .build();
     }
 
