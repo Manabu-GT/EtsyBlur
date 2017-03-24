@@ -45,7 +45,7 @@ public class BlurringView extends View {
 
     private BlurConfig blurConfig;
 
-    private Blur blur;
+    private BlurEngine blur;
 
     private View blurredView;
 
@@ -101,7 +101,11 @@ public class BlurringView extends View {
         if (blurConfig == null) {
             throw new IllegalStateException("BlurConfig must be set before onAttachedToWindow() gets called.");
         }
-        blur = new Blur(getContext(), blurConfig);
+        if (isInEditMode()) {
+            blur = new NoBlur();
+        } else {
+            blur = new Blur(getContext(), blurConfig);
+        }
     }
 
     @Override
