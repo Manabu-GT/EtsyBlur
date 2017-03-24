@@ -24,7 +24,7 @@
     </ScrollView>
 
     <com.ms_square.etsyblur.BlurringView
-        android:id="@+id/blurring_view"
+        android:id="@id/blurring_view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_vertical"/>
