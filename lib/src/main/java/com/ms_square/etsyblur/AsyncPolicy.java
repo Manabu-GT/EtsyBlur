@@ -12,12 +12,12 @@ public interface AsyncPolicy {
 
     /**
      * Decides if a blur operation should run asynchronously given the estimated
-     * computation amount which will affect the how long the blur operation would take.
+     * computation amount which will affect how long the blur operation would take.
      * @param isRenderScript
-     * @param cost
-     * @return boolean - true if it blur operation should execute in a background thread
+     * @param computation
+     * @return true if it blur operation should execute in a background thread
      */
-    boolean shouldAsync(boolean isRenderScript, long cost);
+    boolean shouldAsync(boolean isRenderScript, long computation);
 
     /**
      * Put a pair of estimated computation amount and actual time took to further improve
