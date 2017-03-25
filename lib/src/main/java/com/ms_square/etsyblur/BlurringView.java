@@ -128,7 +128,10 @@ public class BlurringView extends View {
                     bitmapToBlur.eraseColor(Color.TRANSPARENT);
                 }
 
+                blurringCanvas.save();
+                blurringCanvas.translate(-blurredView.getScrollX(), -blurredView.getScrollY());
                 blurredView.draw(blurringCanvas);
+                blurringCanvas.restore();
 
                 Bitmap blurred = blur.execute(bitmapToBlur, true);
 
