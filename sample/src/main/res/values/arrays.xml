@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="list_item_images">
+        <item>@drawable/droid</item>
+        <item>@drawable/droid</item>
+        <item>@drawable/cupcake</item>
+        <item>@drawable/donut</item>
+        <item>@drawable/eclair</item>
+        <item>@drawable/froyo</item>
+        <item>@drawable/gingerbread</item>
+        <item>@drawable/honeycomb</item>
+        <item>@drawable/icecreamsandwich</item>
+        <item>@drawable/jellybean</item>
+        <item>@drawable/kitkat</item>
+        <item>@drawable/lollipop</item>
+        <item>@drawable/marshmallow</item>
+        <item>@drawable/nougat</item>
+        <item>@drawable/o</item>
+    </array>
+</resources>

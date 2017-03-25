@@ -19,18 +19,17 @@
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:src="@drawable/lolipop_bg" />
+
+            <TextView
+                android:id="@+id/number_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="64dp"
+                android:textSize="64dp"
+                android:textColor="@android:color/black"
+                tools:text="1"/>
         </FrameLayout>
     </ScrollView>
-
-    <!-- FAB -->
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--android:src="@drawable/ic_android_white_48dp" />-->
 
 </FrameLayout>

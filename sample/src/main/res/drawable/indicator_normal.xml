@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:innerRadius="0dp"
+       android:shape="ring"
+       android:thickness="@dimen/indicator_radius"
+       android:useLevel="false" >
+
+    <solid android:color="#40f56400" />
+
+    <size
+            android:height="@dimen/indicator_size"
+            android:width="@dimen/indicator_size" />
+</shape>

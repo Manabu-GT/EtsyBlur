@@ -11,8 +11,8 @@ android {
         applicationId "com.ms.square.android.etsyblurdemo"
         minSdkVersion project.ANDROID_MIN_SDK_VERSION
         targetSdkVersion project.ANDROID_TARGET_SDK_VERSION
-        versionCode 5
-        versionName "0.2.0"
+        versionCode 6
+        versionName "0.2.1"
         renderscriptTargetApi project.ANDROID_RS_TARGET_VERSION
         renderscriptSupportModeEnabled true
     }

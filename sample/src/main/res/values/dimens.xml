@@ -6,4 +6,10 @@
     <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">240dp</dimen>
+
+    <!-- Indicator for ViewPager -->
+    <dimen name="indicator_height">48dp</dimen>
+    <dimen name="indicator_size">16dp</dimen>
+    <dimen name="indicator_radius">4dp</dimen>
+    <dimen name="indicator_radius_selected">6dp</dimen>
 </resources>
