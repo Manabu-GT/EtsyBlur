@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sample_titles">
+        <item>@string/title_activity_nav_drawer</item>
+        <item>@string/title_activity_nav_view</item>
+        <item>@string/title_activity_list_view</item>
+        <item>@string/title_activity_recycler_view</item>
+        <item>@string/title_activity_view_pager</item>
+        <item>BlurDialogFragment/onCreateDialog</item>
+        <item>BlurDialogFragment/onCreateView</item>
+    </string-array>
+
+    <string-array name="list_item_titles">
+        <item>Unknown 1.0</item>
+        <item>Petit Four 1.1</item>
+        <item>Cupcake 1.5</item>
+        <item>Donut 1.6</item>
+        <item>Eclair 2.0 - 2.1</item>
+        <item>Froyo 2.2 - 2.2.3</item>
+        <item>Gingerbread 2.3 – 2.3.7</item>
+        <item>Honeycomb 3.0 – 3.2.6</item>
+        <item>Ice Cream Sandwich 4.0 – 4.0.4</item>
+        <item>Jelly Bean 4.1 - 4.3.1</item>
+        <item>KitKat 4.4 – 4.4.4</item>
+        <item>Lollipop 5.0 – 5.1.1</item>
+        <item>Marshmallow 6.0 – 6.0.1</item>
+        <item>Nougat 7.0 – 7.1.1</item>
+        <item>O 8.0</item>
+    </string-array>
+
+    <string-array name="list_item_descriptions">
+        <item>API level: 1 Release Date: September 23, 2008</item>
+        <item>API level: 2 Release Date: February 9, 2009</item>
+        <item>API level: 3 Release Date: April 27, 2009</item>
+        <item>API level: 4 Release Date: September 15, 2009</item>
+        <item>API level: 5-7 Release Date: October 26, 2009</item>
+        <item>API level: 8 Release Date: May 20, 2010</item>
+        <item>API level: 9-10 Release Date: December 6, 2010</item>
+        <item>API level: 11-13 Release Date: February 22, 2011</item>
+        <item>API level: 14-15 Release Date: October 18, 2011</item>
+        <item>API level: 16-18 Release Date: July 9, 2012</item>
+        <item>API level: 19 Release Date: October 31, 2013</item>
+        <item>API level: 21-22 Release Date: November 12, 2014</item>
+        <item>API level: 23 Release Date: October 5, 2015</item>
+        <item>API level: 24-25 Release Date: August 22, 2016</item>
+        <item>API level: TBD Release Date: TBD</item>
+    </string-array>
+</resources>

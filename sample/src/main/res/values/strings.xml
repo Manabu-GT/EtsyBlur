@@ -2,12 +2,20 @@
 <resources>
 
     <string name="app_name">EtsyBlur Demo</string>
+
+    <string name="title_activity_nav_drawer">BlurSupport+NavigationDrawerFragment</string>
+    <string name="title_activity_nav_view">BlurSupport+NavigationView</string>
+    <string name="title_activity_list_view">BlurringView+ListView</string>
+    <string name="title_activity_recycler_view">BlurringView+RecyclerView</string>
+    <string name="title_activity_view_pager">BlurringView+ViewPager</string>
+
     <string name="title_section1">Activity Feed</string>
     <string name="title_section2">Categories</string>
     <string name="title_section3">Settings</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="action_dialog1">Dialog1</string>
     <string name="action_dialog2">Dialog2</string>
-    <string name="prompt_fab">Click FAB to see NavigationView example</string>
 </resources>

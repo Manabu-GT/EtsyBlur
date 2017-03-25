@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+
+        <!-- to use ActionMode with the toolbar -->
+        <item name="windowActionModeOverlay">true</item>
+
+        <!-- Main theme colors (Ref...http://android-developers.blogspot.jp/2014/10/appcompat-v21-material-design-for-pre.html)-->
+        <!--  The primary branding color for the app.
+        By default, this is the color applied to the action bar background. -->
+        <item name="colorPrimary">#ffffff</item>
+        <!-- Darker variant of the primary branding color.
+        By default, this is the color applied to the status bar (via statusBarColor),
+        contextual app bars, and navigation bar (via navigationBarColor).-->
+        <item name="colorPrimaryDark">#9a9a9a</item>
+        <!-- Bright complement to the primary branding color.
+        By default, this is the color applied to framework controls (via colorControlActivated) like checkboxes and text fields
+        to tint widgets -->
+        <item name="colorAccent">#f56400</item>
+
+        <!-- Other items to note.
+        - colorControlNormal
+        The color applied to framework controls in their normal state.
+        - colorControlActivated
+        The color applied to framework controls in their activated (ex. checked) state.
+        - colorControlHighlight
+        The color applied to framework control highlights (ex. ripples, list selectors).
+        - colorButtonNormal
+        The color applied to framework buttons in their normal state.
+        - colorSwitchThumbNormal
+        The color applied to framework switch thumbs in their normal state. (I guess this is for those Switches)
+        -->
+    </style>
+
+    <!-- Application theme w/ ActionBar. -->
+    <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light">
+        <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item>
+        <item name="actionBarStyle">@style/EtsyActionBar</item>
+        <item name="actionBarTabTextStyle">@style/TabTextStyle</item>
+        <item name="actionMenuTextColor">@color/actionbar_subtext</item>
+    </style>
+
+    <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:textColorSecondary">#ffffff</item>
+        <!-- color the arrow -->
+        <item name="colorControlNormal">@color/actionbar_text</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/actionbar_text</item>
+        <item name="android:textColorSecondary">@color/actionbar_subtext</item>
+        <item name="android:actionMenuTextColor">@color/actionbar_subtext</item>
+    </style>
+</resources>

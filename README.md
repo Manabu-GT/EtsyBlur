@@ -4,7 +4,8 @@ EtsyBlur
 EtsyBlur is an Android library that allows developers to easily add a glass-like blur effect 
 implemented in the past [Etsy][1] app.
 
-<img src="https://raw.github.com/Manabu-GT/EtsyBlur/master/art/readme_demo.gif" width=245 height=421 alt="Quick Demo">
+<img src="https://raw.github.com/Manabu-GT/EtsyBlur/master/art/sample_launch_screen.png" width=221 height=379 alt="Sample App's Launch Screen">
+<img src="https://raw.github.com/Manabu-GT/EtsyBlur/master/art/readme_demo.gif" width=221 height=379 alt="Quick Demo">
 
 Try out the sample application:
 
@@ -227,9 +228,10 @@ Compared with its original implementation, there are several changes such as the
 
 * If renderscript is not available, it can optionally fallback to the Java's fastblur implementation.
 * No need to call invalidate manually on the target blurredView.
-* The number of bitmaps used is reduced.
+* The number of bitmaps used is reduced to 1.
 * Does not crash if the target blurredView is set to the BlurringView's parent.
 * Support for the layout preview UI via the isInEditMode() method
+* Support to work with ViewPager
 
 BlurringView currently does not support asynchronous execution of a blur operation. For now, just adjust downSampleFactor and blurRadius to get fast enough performance to just run it on the UI thread. I will ponder if the need for asynchronous suppport justifies added code complexity mainly due to threading.
 
@@ -277,6 +279,7 @@ Currently, the follwing policies are provided.
 
 Change logs
 ----------
+* 0.2.1 : Fixed BlurringView to work with ViewPager (3/2017)
 * 0.2.0 : Mostly re-wrote old outdated code and updated IFs. Noticed Etsy app no longer uses blur... Might re-consider current library structures (3/2017)
 * 0.1.4 : Fix to fall back to Java's fast blur when renderscript is unavailable. (3/2017)
 * 0.1.3 : Fix issues when window has a navigation bar in BlurDialogFragmentHelper. (11/2015)
@@ -306,4 +309,4 @@ License
 [3]: https://github.com/500px/500px-android-blur
 [4]: https://github.com/Manabu-GT/EtsyBlur/blob/master/lib/src/main/java/com/ms_square/etsyblur/BlurConfig.java
 [5]: https://github.com/Manabu-GT/EtsyBlur/blob/master/lib/src/main/java/com/ms_square/etsyblur/AsyncPolicy.java
-[6]: https://github.com/Manabu-GT/EtsyBlur/tree/master/sample/src/main/java/com/ms/square/android/etsyblurdemo/CreateViewDialogFragment.java
+[6]: https://github.com/Manabu-GT/EtsyBlur/tree/master/sample/src/main/java/com/ms/square/android/etsyblurdemo/ui/fragment/CreateViewDialogFragment.java
