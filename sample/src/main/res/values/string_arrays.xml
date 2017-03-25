@@ -15,17 +15,17 @@
         <item>Petit Four 1.1</item>
         <item>Cupcake 1.5</item>
         <item>Donut 1.6</item>
-        <item>Eclair 2.0-2.1</item>
-        <item>Froyo 2.2-2.2.3</item>
+        <item>Eclair 2.0 - 2.1</item>
+        <item>Froyo 2.2 - 2.2.3</item>
         <item>Gingerbread 2.3 – 2.3.7</item>
-        <item>Honeycomb	3.0 – 3.2.6</item>
+        <item>Honeycomb 3.0 – 3.2.6</item>
         <item>Ice Cream Sandwich 4.0 – 4.0.4</item>
-        <item>Jelly Bean 4.1 – 4.3.1</item>
+        <item>Jelly Bean 4.1 - 4.3.1</item>
         <item>KitKat 4.4 – 4.4.4</item>
         <item>Lollipop 5.0 – 5.1.1</item>
         <item>Marshmallow 6.0 – 6.0.1</item>
         <item>Nougat 7.0 – 7.1.1</item>
-        <item>O	8.0</item>
+        <item>O 8.0</item>
     </string-array>
 
     <string-array name="list_item_descriptions">
