@@ -51,7 +51,7 @@ public class PlaceholderFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         View numberText = view.findViewById(R.id.number_text);
         if (numberText != null && numberText instanceof TextView) {
-            ((TextView) numberText).setText(String.valueOf(getArguments().getInt(ARG_SECTION_NUMBER)));
+            ((TextView) numberText).setText(String.valueOf(getArguments().getInt(ARG_SECTION_NUMBER) + 1));
         }
     }
 

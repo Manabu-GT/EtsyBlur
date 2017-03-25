@@ -24,8 +24,8 @@
                 android:id="@+id/number_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="64dp"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginTop="32dp"
                 android:textSize="64dp"
                 android:textColor="@android:color/black"
                 tools:text="1"/>
