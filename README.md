@@ -25,7 +25,7 @@ so you just need to add the followings to your ***build.gradle*** file:
 
 ```groovy
 dependencies {
-    compile 'com.ms-square:etsyblur:0.2.0'
+    compile 'com.ms-square:etsyblur:0.2.1'
 }
 
 android {
