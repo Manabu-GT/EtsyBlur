@@ -1,6 +1,9 @@
 EtsyBlur
 ===========
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.ms-square/etsyblur/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.ms-square/etsyblur)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-EtsyBlur-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1202)
+
 EtsyBlur is an Android library that allows developers to easily add a glass-like blur effect 
 implemented in the past [Etsy][1] app.
 
