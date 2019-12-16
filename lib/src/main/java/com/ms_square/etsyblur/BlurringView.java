@@ -102,7 +102,7 @@ public class BlurringView extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (this.blurredView.getViewTreeObserver().isAlive()) {
+        if (this.blurredView != null && this.blurredView.getViewTreeObserver().isAlive()) {
             this.blurredView.getViewTreeObserver().removeOnPreDrawListener(preDrawListener);
         }
         blur.destroy();
