@@ -1,3 +1,26 @@
+# ⚠️ [DEPRECATED]
+
+> **This library is no longer maintained.**
+> It relies on **RenderScript**, which has been deprecated and removed from modern Android build tools. Using this library in new projects will cause build failures.
+
+---
+
+### Modern Alternatives (Jetpack Compose)
+
+**1. For "Glassmorphism" / Frosted Glass (The Etsy Effect):**
+Use the **[Haze](https://github.com/chrisbanes/haze)** library by Chris Banes. It is the community standard for high-performance blurring and glass effects in Compose.
+
+**2. For Simple Blurs (Android 12+):**
+If you only need to blur an image or a composable on newer devices, the native modifier could be your option:
+
+```kotlin
+Image(
+    painter = painterResource(id = R.drawable.my_image),
+    contentDescription = null,
+    modifier = Modifier.blur(10.dp) // Requires API 31+ (Android 12)
+)
+```
+
 EtsyBlur
 ===========
 
